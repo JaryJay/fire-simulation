@@ -1,10 +1,10 @@
-class FireParticle {
+class Particle {
 	PVector position;
 	PVector prevPosition;
 	PVector force;
 	float heat;
 
-	FireParticle(float x, float y, float z, float heat) {
+	Particle(float x, float y, float z, float heat) {
 		this.position = new PVector(x, y, z);
 		this.prevPosition = new PVector(x, y, z);
 		this.force = new PVector();
@@ -14,6 +14,7 @@ class FireParticle {
 	void update(PVector wind, PVector gravity) {
 		// Use Verlet integration to update the position
 		PVector velocity = position.copy().sub(prevPosition);
+    velocity.mult(0.95);
 		prevPosition = position.copy();
 		force.add(gravity).add(wind);
 		force.mult(0.95);
