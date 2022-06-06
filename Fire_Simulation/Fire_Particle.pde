@@ -4,9 +4,9 @@ class FireParticle {
 	PVector force;
 	float heat;
 
-	FireParticle(float x, float y, float heat) {
-		this.position = new PVector(x, y);
-		this.prevPosition = new PVector(x, y);
+	FireParticle(float x, float y, float z, float heat) {
+		this.position = new PVector(x, y, z);
+		this.prevPosition = new PVector(x, y, z);
 		this.force = new PVector();
 		this.heat = heat;
 	}
@@ -20,14 +20,16 @@ class FireParticle {
 		position.add(velocity).add(force);
 		// Reset the force
 		force.set(0, 0);
-		if (position.y > height - heat) {
-			position.y = height - heat;
+		if (position.y > 500 - heat) {
+			position.y = 500 - heat;
 		}
 	}
 	
 	void render() {
-		fill(0);
-		ellipse(position.x, position.y, radius() * 2, radius() * 2);
+		fill(255);
+    translate(position.x, position.y, position.z);
+    box(radius());
+    translate(-position.x, -position.y, -position.z);
 	}
 
 	float radius() {
