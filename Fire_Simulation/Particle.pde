@@ -11,19 +11,15 @@ class Particle {
 		this.heat = heat;
 	}
 	
-	void update(PVector wind, PVector gravity) {
+	void updatePosition() {
 		// Use Verlet integration to update the position
 		PVector velocity = position.copy().sub(prevPosition);
     velocity.mult(0.95);
 		prevPosition = position.copy();
-		force.add(gravity).add(wind);
-		force.mult(0.95);
+		//force.mult(0.95);
 		position.add(velocity).add(force);
 		// Reset the force
 		force.set(0, 0);
-		if (position.y > 500 - heat) {
-			position.y = 500 - heat;
-		}
 	}
 	
 	void render() {
