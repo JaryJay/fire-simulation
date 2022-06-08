@@ -13,7 +13,7 @@ class ParticleSystem {
     for (Particle p : particles) {
       p.force.add(wind);
       p.force.add(gravity);
-      p.force.add(0, -p.heat * 0.1,0);
+      p.force.add(0, -p.heat * 0.05,0);
     }
     for (int i=0; i < particles.size(); i++) {
       for (int j = i + 1; j < particles.size(); j++) {
@@ -55,11 +55,11 @@ class ParticleSystem {
     if (dist < p0.radius() + p1.radius() + HEAT_DIFFUSION_RADIUS) {
       float heatDiff = abs(p1.heat - p0.heat);
       if (p1.heat < p0.heat) {
-        p1.heatChange += heatDiff * 0.1;
-        p0.heatChange -= heatDiff * 0.1;
+        p1.heat += heatDiff * 0.03;
+        p0.heat -= heatDiff * 0.03;
       } else {
-        p0.heatChange += heatDiff * 0.1;
-        p1.heatChange -= heatDiff * 0.1;
+        p0.heat += heatDiff * 0.03;
+        p1.heat -= heatDiff * 0.03;
       }
     }
   }

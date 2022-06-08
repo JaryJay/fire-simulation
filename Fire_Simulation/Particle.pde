@@ -34,7 +34,13 @@ class Particle {
   }
 	
 	void render() {
-		fill(255);
+    if (heat < 5) {
+      fill(lerp(color(0, 0, 0), color(204, 93, 2), heat / 5));
+    } else if (heat < 25) {
+      fill(lerp(color(204, 93, 2), color(255, 72, 43), (heat - 5) / (25 - 5)));
+    } else if (heat < 100) {
+      fill(lerp(color(255, 72, 43), color(255, 255, 255), (heat - 25) / (100 - 10)));
+    }
     translate(position.x, position.y, position.z);
     box(radius());
     translate(-position.x, -position.y, -position.z);

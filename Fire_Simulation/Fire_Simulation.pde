@@ -1,4 +1,4 @@
-final float HEAT_DIFFUSION_RADIUS = 0;
+final float HEAT_DIFFUSION_RADIUS = 1;
 final float CONTAINER_HEIGHT = 500;
 final float CONTAINER_WIDTH = 400;
 final float CONTAINER_LENGTH = 100;
@@ -13,7 +13,7 @@ void setup() {
   // frameRate(1);
   wind = new PVector(0.01, 0);
   gravity = new PVector(0, 0.4);
-  for (int i=0; i < 1650; i++) {
+  for (int i=0; i < 2650; i++) {
     particleSystem.particles.add(new Particle(random(width), random(100), random(100), random(10)));
   }
 }
