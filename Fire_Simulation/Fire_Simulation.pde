@@ -12,9 +12,9 @@ void setup() {
   //frameRate(5);
   // frameRate(1);
   wind = new PVector(0.01, 0);
-  gravity = new PVector(0, 0.4);
-  for (int i=0; i < 2650; i++) {
-    particleSystem.particles.add(new Particle(random(width), random(100), random(100), random(10)));
+  gravity = new PVector(0, 0.6);
+  for (int i=0; i < 2000; i++) {
+    particleSystem.particles.add(new Particle(random(width), random(500), random(100), random(20)));
   }
 }
 
