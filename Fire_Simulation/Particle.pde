@@ -37,12 +37,15 @@ class Particle {
   }
 	
 	void render() {
+    if (heat < HIDE_THRESHOLD) {
+      return;
+    }
     if (heat < 10) {
-      fill(lerp(color(1, 1, 1), color(204, 93, 2), heat / 10));
+      fill(lerp(COLOR_1, COLOR_2, heat / 10));
     } else if (heat < 25) {
-      fill(lerp(color(204, 93, 2), color(40,10,100), (heat - 10) / (25 - 10)));
+      fill(lerp(COLOR_2, COLOR_3, (heat - 10) / (25 - 10)));
     } else if (heat < 60) {
-      fill(lerp(color(40,10,100), color(255, 255, 255), (heat - 25) / (60 - 25)));
+      fill(lerp(COLOR_3, COLOR_4, (heat - 25) / (60 - 25)));
     }
     translate(position.x, position.y, position.z);
     box(radius());
