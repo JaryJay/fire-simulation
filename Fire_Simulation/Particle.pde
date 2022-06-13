@@ -40,9 +40,9 @@ class Particle {
     if (heat < 10) {
       fill(lerp(color(1, 1, 1), color(204, 93, 2), heat / 10));
     } else if (heat < 25) {
-      fill(lerp(color(204, 93, 2), color(255, 132, 0), (heat - 10) / (25 - 10)));
+      fill(lerp(color(204, 93, 2), color(40,10,100), (heat - 10) / (25 - 10)));
     } else if (heat < 60) {
-      fill(lerp(color(255, 132, 0), color(255, 255, 255), (heat - 25) / (60 - 25)));
+      fill(lerp(color(40,10,100), color(255, 255, 255), (heat - 25) / (60 - 25)));
     }
     translate(position.x, position.y, position.z);
     box(radius());
