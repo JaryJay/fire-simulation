@@ -58,7 +58,7 @@ class ParticleSystem {
   void applyConstraints() {
     for (Particle p : particles) {
       p.position.x = min(max(p.position.x, 0 + p.radius()), CONTAINER_WIDTH - p.radius());
-      p.position.y = min(max(p.position.y, 0 + p.radius()), 600 - p.radius(), p.position.y);
+      p.position.y = min(max(p.position.y, 0 + p.radius()), CONTAINER_HEIGHT - p.radius(), p.position.y);
       p.position.z = min(max(p.position.z, -CONTAINER_LENGTH + p.radius()), 0 - p.radius());
     }
   }

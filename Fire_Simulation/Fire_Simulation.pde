@@ -3,6 +3,7 @@ final float HEAT_DIFFUSION_RADIUS = 1;
 final float CONTAINER_HEIGHT = 500;
 final float CONTAINER_WIDTH = 500;
 final float CONTAINER_LENGTH = 120;
+final float GRAVITY = 0.7;
 final float HIDE_THRESHOLD = -1;
 final color COLOR_1 = color(1, 1, 1);
 final color COLOR_2 = color(204, 93, 2);
@@ -21,7 +22,7 @@ void setup() {
   //frameRate(5);
   // frameRate(1);
   wind = new PVector(0, 0);
-  gravity = new PVector(0, 0.7);
+  gravity = new PVector(0, GRAVITY);
   for (int i=0; i < NUM_PARTICLES; i++) {
     particleSystem.particles.add(new Particle(random(CONTAINER_WIDTH), random(CONTAINER_HEIGHT), random(CONTAINER_LENGTH), random(20)));
   }

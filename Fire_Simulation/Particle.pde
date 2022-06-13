@@ -31,7 +31,7 @@ class Particle {
     heat *= 0.99;
     heat = min(max(heat, 0), 500);
     prevHeat = heat;
-    if (position.y + radius() >= CONTAINER_HEIGHT) {
+    if (position.y + radius() >= CONTAINER_HEIGHT - 80) {
       heat += random(1);
     }
   }
