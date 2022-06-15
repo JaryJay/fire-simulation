@@ -26,13 +26,13 @@ class Particle {
 	}
 
   void updateHeat(float dt) {
-    heat += heatChange + random(dt) - dt / 2;
+    heat += heatChange + random(dt /2) - dt / 4;
     heatChange = 0;
-    heat *= 0.99;
+    heat *= 0.992;
     heat = min(max(heat, 0), 500);
     prevHeat = heat;
-    if (position.y + radius() >= CONTAINER_HEIGHT - 80) {
-      heat += random(1);
+    if (position.y + radius() >= CONTAINER_HEIGHT - 50) {
+      heat += random(dt) * 2.4;
     }
   }
 	

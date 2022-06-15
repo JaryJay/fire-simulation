@@ -1,6 +1,7 @@
 class ParticleSystem {
 
   ArrayList<Particle> particles = new ArrayList<Particle>();
+  ArrayList<RigidBodyParticle> rigidBodyParticles = new ArrayList<RigidBodyParticle>();
 
   void update() {
     int numSubsteps = 2;
@@ -26,11 +27,11 @@ class ParticleSystem {
         if (dist < p0.radius() + p1.radius() + HEAT_DIFFUSION_RADIUS) {
           float heatDiff = abs(p1.heat - p0.heat);
           if (p1.heat < p0.heat) {
-            p1.heat += heatDiff * 0.08;
-            p0.heat -= heatDiff * 0.08;
+            p1.heat += heatDiff * 0.1;
+            p0.heat -= heatDiff * 0.1;
           } else {
-            p0.heat += heatDiff * 0.08;
-            p1.heat -= heatDiff * 0.08;
+            p0.heat += heatDiff * 0.1;
+            p1.heat -= heatDiff * 0.1;
           }
         }
       }

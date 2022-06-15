@@ -2,13 +2,13 @@ final int NUM_PARTICLES = 1600;
 final float HEAT_DIFFUSION_RADIUS = 1;
 final float CONTAINER_HEIGHT = 500;
 final float CONTAINER_WIDTH = 500;
-final float CONTAINER_LENGTH = 120;
+final float CONTAINER_LENGTH = 250;
 final float GRAVITY = 0.7;
-final float HIDE_THRESHOLD = -1;
-final color COLOR_1 = color(1, 1, 1);
-final color COLOR_2 = color(204, 93, 2);
-final color COLOR_3 = color(255, 150, 0);
-final color COLOR_4 = color(255, 255, 255);
+final float HIDE_THRESHOLD = 6;
+final color COLOR_1 = color(1, 1, 1, 0);
+final color COLOR_2 = color(204, 93, 2, 0.5);
+final color COLOR_3 = color(10, 40, 100, 0.5);
+final color COLOR_4 = color(255, 255, 255, 0.5);
 
 ParticleSystem particleSystem = new ParticleSystem();
 PVector wind;
@@ -32,7 +32,7 @@ void draw() {
   background(0);
   noStroke();
   lights();
-  //wind = new PVector(mouseX - width/2, mouseY - height/2).mult(0.0005);
+  wind = new PVector(mouseX - width/2, mouseY - height/2).mult(0.00005);
   particleSystem.update();
   particleSystem.render();
 }
