@@ -22,8 +22,26 @@ class RigidBodyParticle extends Particle {
     }
   }
 
-  @Override
-    float radius() {
-    return 6;
+  @Override float radius() {
+    return 10;
   }
+  
+  
+  void render() {
+    //if (heat < HIDE_THRESHOLD) {
+    //  return;
+    //}
+    //if (heat < 10) {
+    //  fill(lerp(COLOR_1, COLOR_2, (heat - HIDE_THRESHOLD) / (10 - HIDE_THRESHOLD)));
+    //} else if (heat < 25) {
+    //  fill(lerp(COLOR_2, COLOR_3, (heat - 10) / (25 - 10)));
+    //} else if (heat < 60) {
+    //  fill(lerp(COLOR_3, COLOR_4, (heat - 25) / (60 - 25)));
+    //}
+    fill(255,255,255);
+    translate(position.x, position.y, position.z);
+    box(radius());
+    translate(-position.x, -position.y, -position.z);
+  }
+  
 }

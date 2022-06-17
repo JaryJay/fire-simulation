@@ -9,7 +9,7 @@ ArrayList<RigidBodyParticle> createRigidStick(int l, float x, float y, float z) 
   ArrayList<RigidBodyParticle> list = new ArrayList<RigidBodyParticle>();
   list.add(new RigidBodyParticle(x, y, z, 0));
   for (int i=1; i < l; i++) {
-    RigidBodyParticle p = new RigidBodyParticle(x, y, z, 0);
+    RigidBodyParticle p = new RigidBodyParticle(x + i * list.get(0).radius(), y, z, 0);
     p.bondWith(list.get(i-1));
     list.add(p);
   }

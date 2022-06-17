@@ -11,6 +11,7 @@ class ParticleSystem {
       applyForces();
       applyCollisions();
       applyPositionChanges(dt);
+      applyRigidBodyConstraints();
       applyConstraints();
       applyHeatChanges(dt);
     }
@@ -70,6 +71,23 @@ class ParticleSystem {
     }
   }
 
+  void applyRigidBodyConstraints() {
+    for (RigidBodyParticle p0 : rigidBodyParticles) {
+      for (RigidBodyParticle p1 : p0.bonds) {
+        PVector pos0 = p0.position;
+        PVector pos1 = p1.position;
+        float dist = dist(pos0.x, pos0.y, pos0.z, pos1.x, pos1.y, pos1.z);
+        if (dist > p0.radius() + p1.radius()) {
+          float moveFactor0 = 0.5   *   (dist - p0.radius() - p1.radius());
+          float moveFactor1 = 0.5   *   (dist - p0.radius() - p1.radius());
+          PVector p1ToP0 = p0.position.copy().sub(p1.position).normalize();
+          p1.position.add(p1ToP0.copy().mult( moveFactor1));
+          p0.position.add(p1ToP0.copy().mult(-moveFactor0));
+        }
+      }
+    }
+  }
+
   void applyHeatChanges(float dt) {
     for (Particle p : particles) {
       p.updateHeat(dt);
@@ -94,6 +112,13 @@ class ParticleSystem {
   void render() {
     for (Particle p : particles) {
       p.render();
+    }
+  }
+
+  void add(Particle p) {
+    particles.add(p);
+    if (p instanceof RigidBodyParticle) {
+      rigidBodyParticles.add((RigidBodyParticle) p);
     }
   }
 }
