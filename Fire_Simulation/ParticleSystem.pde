@@ -11,8 +11,8 @@ class ParticleSystem {
       applyForces();
       applyCollisions();
       applyPositionChanges(dt);
-      applyRigidBodyConstraints();
       applyConstraints();
+      applyRigidBodyConstraints();
       applyHeatChanges(dt);
     }
   }
@@ -43,7 +43,9 @@ class ParticleSystem {
     for (Particle p : particles) {
       p.force.add(wind);
       p.force.add(gravity);
-      p.force.add(0, -p.heat * 0.04, 0);
+      if (!(p instanceof RigidBodyParticle)) {
+        p.force.add(0, -p.heat * 0.04, 0);
+      }
     }
   }
 
@@ -119,6 +121,12 @@ class ParticleSystem {
     particles.add(p);
     if (p instanceof RigidBodyParticle) {
       rigidBodyParticles.add((RigidBodyParticle) p);
+    }
+  }
+
+  void addAll(List<RigidBodyParticle> particles) {
+    for (RigidBodyParticle p : particles) {
+      add(p);
     }
   }
 }

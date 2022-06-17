@@ -2,8 +2,8 @@ class RigidBodyParticle extends Particle {
 
   ArrayList<RigidBodyParticle> bonds = new ArrayList<RigidBodyParticle>();
 
-  RigidBodyParticle(float x, float y, float z, float heat) {
-    super(x, y, z, heat);
+  RigidBodyParticle(float x, float y, float z) {
+    super(x, y, z, 0);
   }
 
   void bondWith(RigidBodyParticle p) {
@@ -23,7 +23,7 @@ class RigidBodyParticle extends Particle {
   }
 
   @Override float radius() {
-    return 10;
+    return RIGID_PARTICLE_SIZE / 2;
   }
   
   
