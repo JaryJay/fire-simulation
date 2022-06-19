@@ -17,7 +17,7 @@ class Particle {
   void updatePosition(float dt) {
     // Use Verlet integration to update the position
     PVector velocity = position.copy().sub(prevPosition);
-    //velocity.mult(0.999);
+    velocity.mult(0.9999);
     prevPosition = position.copy();
     //force.mult(0.95);
     position.add(velocity).add(force.mult(dt * dt));
@@ -26,10 +26,13 @@ class Particle {
   }
 
   void updateHeat(float dt) {
-    heat += heatChange;// + random(dt /2) - dt / 4;
+    heat += heatChange + random(dt) - dt / 2;
     heatChange = 0;
-    heat *= 0.992;
-    heat = min(max(heat, 0), 500);
+    if (position.y < 0) {
+      heat *= 0.95;
+    } else {
+      heat *= 0.996;
+    }
     prevHeat = heat;
     if (position.y + radius() >= CONTAINER_HEIGHT - 50) {
       heat += random(dt) * 2.4;
@@ -41,7 +44,7 @@ class Particle {
       return;
     }
     if (heat < 10) {
-      fill(lerp(COLOR_1, COLOR_2, (heat - HIDE_THRESHOLD) / (10 - HIDE_THRESHOLD)));
+      fill(lerp(COLOR_1, COLOR_2, (heat) / (10)));
     } else if (heat < 25) {
       fill(lerp(COLOR_2, COLOR_3, (heat - 10) / (25 - 10)));
     } else if (heat < 60) {
@@ -53,6 +56,6 @@ class Particle {
   }
 
   float radius() {
-    return 1.8 * sqrt(heat) + 4;
+    return 1.8 * sqrt(heat) + PARTICLE_SIZE;
   }
 }

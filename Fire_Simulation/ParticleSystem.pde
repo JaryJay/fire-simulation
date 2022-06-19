@@ -15,6 +15,7 @@ class ParticleSystem {
       applyRigidBodyConstraints();
       applyHeatChanges(dt);
     }
+    convertHotRigidBodies();
   }
 
   void applyHeatDiffusion() {
@@ -28,11 +29,11 @@ class ParticleSystem {
         if (dist < p0.radius() + p1.radius() + HEAT_DIFFUSION_RADIUS) {
           float heatDiff = abs(p1.heat - p0.heat);
           if (p1.heat < p0.heat) {
-            p1.heat += heatDiff * 0.1;
-            p0.heat -= heatDiff * 0.1;
+            p1.heat += heatDiff * HEAT_DIFFUSION_SPEED;
+            p0.heat -= heatDiff * HEAT_DIFFUSION_SPEED;
           } else {
-            p0.heat += heatDiff * 0.1;
-            p1.heat -= heatDiff * 0.1;
+            p0.heat += heatDiff * HEAT_DIFFUSION_SPEED;
+            p1.heat -= heatDiff * HEAT_DIFFUSION_SPEED;
           }
         }
       }
@@ -44,7 +45,7 @@ class ParticleSystem {
       p.force.add(wind);
       p.force.add(gravity);
       if (!(p instanceof RigidBodyParticle)) {
-        p.force.add(0, -p.heat * 0.04, 0);
+        p.force.add(0, p.heat * -UPWARD_FORCE, 0);
       }
     }
   }
@@ -62,7 +63,7 @@ class ParticleSystem {
   void applyConstraints() {
     for (Particle p : particles) {
       p.position.x = min(max(p.position.x, 0 + p.radius()), CONTAINER_WIDTH - p.radius());
-      p.position.y = min(max(p.position.y, 0 + p.radius()), CONTAINER_HEIGHT - p.radius(), p.position.y);
+      p.position.y = min(max(p.position.y, -500 + p.radius()), CONTAINER_HEIGHT - p.radius());
       p.position.z = min(max(p.position.z, -CONTAINER_LENGTH + p.radius()), 0 - p.radius());
     }
   }
@@ -80,8 +81,8 @@ class ParticleSystem {
         PVector pos1 = p1.position;
         float dist = dist(pos0.x, pos0.y, pos0.z, pos1.x, pos1.y, pos1.z);
         if (dist > p0.radius() + p1.radius()) {
-          float moveFactor0 = 0.5   *   (dist - p0.radius() - p1.radius());
-          float moveFactor1 = 0.5   *   (dist - p0.radius() - p1.radius());
+          float moveFactor0 = 0.3   *   (dist - p0.radius() - p1.radius());
+          float moveFactor1 = 0.3   *   (dist - p0.radius() - p1.radius());
           PVector p1ToP0 = p0.position.copy().sub(p1.position).normalize();
           p1.position.add(p1ToP0.copy().mult( moveFactor1));
           p0.position.add(p1ToP0.copy().mult(-moveFactor0));
@@ -107,6 +108,18 @@ class ParticleSystem {
       PVector pos1ToPos0 = pos0.copy().sub(pos1).normalize(); 
       pos0.add( pos1ToPos0.copy().mult( moveFactor0) );
       pos1.add( pos1ToPos0.copy().mult(-moveFactor1) );
+    }
+  }
+  
+  void convertHotRigidBodies() {
+    for (int i = rigidBodyParticles.size() - 1; i >= 0; i--) {
+      RigidBodyParticle p = rigidBodyParticles.get(i);
+      if (p.heat >= BURN_HEAT) {
+        rigidBodyParticles.remove(i);
+        particles.remove(p);
+        p.unbondAll();
+        particles.add(new Particle(p.position.x, p.position.y, p.position.z, 0));
+      }
     }
   }
 

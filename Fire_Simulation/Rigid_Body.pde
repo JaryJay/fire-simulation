@@ -8,12 +8,12 @@ class RigidBodyParticle extends Particle {
 
   void bondWith(RigidBodyParticle p) {
     bonds.add(p);
-    p.bonds.add(p);
+    p.bonds.add(this);
   }
 
   void unbondWith(RigidBodyParticle p) {
     bonds.remove(p);
-    p.bonds.remove(p);
+    p.bonds.remove(this);
   }
 
   void unbondAll() {
@@ -21,6 +21,14 @@ class RigidBodyParticle extends Particle {
       unbondWith(bonds.get(i));
     }
   }
+  
+  //@Override void updateHeat(float dt) {
+  //  heat += heatChange;// + random(dt /2) - dt / 4;
+  //  heatChange = 0;
+  //  heat *= 0.992;
+  //  heat = min(max(heat, 0), 500);
+  //  prevHeat = heat;
+  //}
 
   @Override float radius() {
     return RIGID_PARTICLE_SIZE / 2;
