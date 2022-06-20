@@ -54,6 +54,6 @@ class Particle {
   }
 
   float radius() {
-    return 1.8 * sqrt(heat) + PARTICLE_SIZE;
+    return 1.8 * sqrt(heat) + particleSize;
   }
 }

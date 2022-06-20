@@ -2,7 +2,7 @@ import g4p_controls.*;
 import peasy.*;
 import java.util.List;
 
-final int NUM_PARTICLES = 0;
+final int INITIAL_NUM_PARTICLES = 200;
 
 final float HEAT_DIFFUSION_RADIUS = 2;
 final float HEAT_DIFFUSION_SPEED = 0.05;
@@ -10,12 +10,11 @@ final float CONTAINER_HEIGHT = 400;
 final float CONTAINER_WIDTH = 400;
 final float CONTAINER_LENGTH = 450;
 
-final float GRAVITY = 0.7;
 final float UPWARD_FORCE = 0.038;
 
 final float HIDE_THRESHOLD = 3;
 
-final float PARTICLE_SIZE = 7;
+float particleSize = 7;
 final float RIGID_PARTICLE_SIZE = 20;
 
 final float BURN_HEAT = 20;
@@ -42,8 +41,8 @@ void setup() {
   createGUI();
   
   wind = new PVector(0, 0);
-  gravity = new PVector(0, GRAVITY);
-  for (int i=0; i < NUM_PARTICLES; i++) {
+  gravity = new PVector(0, gravitySlider.getValueF());
+  for (int i=0; i < INITIAL_NUM_PARTICLES; i++) {
     particleSystem.add(generateParticle());
   }
   for (int i = 0; i < 20; i++) {

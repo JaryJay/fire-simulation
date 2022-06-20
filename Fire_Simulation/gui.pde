@@ -50,6 +50,18 @@ public void gravitySliderChange(GCustomSlider source, GEvent event) { //_CODE_:g
   }
 } //_CODE_:gravitySlider:832510:
 
+public void sourceHeatSliderChange(GCustomSlider source, GEvent event) { //_CODE_:sourceHeatSlider:752988:
+  println("custom_slider1 - GCustomSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:sourceHeatSlider:752988:
+
+public void addCubeClick(GButton source, GEvent event) { //_CODE_:addCube:868378:
+  println("addCube - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:addCube:868378:
+
+public void particleSizeSliderChange(GCustomSlider source, GEvent event) { //_CODE_:particleSizeSlider:859119:
+  particleSize = particleSizeSlider.getValueF();
+} //_CODE_:particleSizeSlider:859119:
+
 
 
 // Create all the GUI controls. 
@@ -83,16 +95,35 @@ public void createGUI(){
   add10Particles.setText("Add 10");
   add10Particles.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   add10Particles.addEventHandler(this, "add10ParticlesClick");
-  gravitySlider = new GCustomSlider(controlPanel, 319, 120, 100, 30, "blue18px");
-  gravitySlider.setShowValue(true);
+  gravitySlider = new GCustomSlider(controlPanel, 320, 120, 100, 40, "blue18px");
   gravitySlider.setRotation(PI/2, GControlMode.CORNER);
   gravitySlider.setLimits(0.7, 0.0, 2.0);
-  gravitySlider.setNbrTicks(10);
+  gravitySlider.setNbrTicks(11);
   gravitySlider.setShowTicks(true);
   gravitySlider.setNumberFormat(G4P.DECIMAL, 2);
   gravitySlider.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   gravitySlider.setOpaque(false);
   gravitySlider.addEventHandler(this, "gravitySliderChange");
+  sourceHeatSlider = new GCustomSlider(controlPanel, 280, 120, 100, 40, "blue18px");
+  sourceHeatSlider.setRotation(PI/2, GControlMode.CORNER);
+  sourceHeatSlider.setLimits(2.4, 0.5, 5.0);
+  sourceHeatSlider.setNbrTicks(11);
+  sourceHeatSlider.setShowTicks(true);
+  sourceHeatSlider.setNumberFormat(G4P.DECIMAL, 2);
+  sourceHeatSlider.setOpaque(false);
+  sourceHeatSlider.addEventHandler(this, "sourceHeatSliderChange");
+  addCube = new GButton(controlPanel, 30, 120, 80, 30);
+  addCube.setText("Add Cube");
+  addCube.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  addCube.addEventHandler(this, "addCubeClick");
+  particleSizeSlider = new GCustomSlider(controlPanel, 240, 120, 100, 40, "blue18px");
+  particleSizeSlider.setRotation(PI/2, GControlMode.CORNER);
+  particleSizeSlider.setLimits(7.0, 0.01, 10.0);
+  particleSizeSlider.setNbrTicks(11);
+  particleSizeSlider.setShowTicks(true);
+  particleSizeSlider.setNumberFormat(G4P.DECIMAL, 2);
+  particleSizeSlider.setOpaque(false);
+  particleSizeSlider.addEventHandler(this, "particleSizeSliderChange");
   controlPanel.loop();
 }
 
@@ -105,3 +136,6 @@ GLabel numParticlesLabel;
 GButton add1Particle; 
 GButton add10Particles; 
 GCustomSlider gravitySlider; 
+GCustomSlider sourceHeatSlider; 
+GButton addCube; 
+GCustomSlider particleSizeSlider; 
