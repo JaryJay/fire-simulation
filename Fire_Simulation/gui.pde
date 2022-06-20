@@ -142,7 +142,7 @@ public void createGUI(){
   addCube.addEventHandler(this, "addCubeClick");
   particleSizeSlider = new GCustomSlider(controlPanel, 240, 120, 100, 40, "blue18px");
   particleSizeSlider.setRotation(PI/2, GControlMode.CORNER);
-  particleSizeSlider.setLimits(7.0, 0.01, 10.0);
+  particleSizeSlider.setLimits(7.0, 0.8, 10.0);
   particleSizeSlider.setNbrTicks(11);
   particleSizeSlider.setShowTicks(true);
   particleSizeSlider.setNumberFormat(G4P.DECIMAL, 2);

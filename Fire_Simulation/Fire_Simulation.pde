@@ -1,7 +1,8 @@
-// ***************************************************
-// * Fire Simulation - By Jay Ren                    *
-// * Simulates fire using particle physics!          *
-// ***************************************************
+// **********************************************************
+// * Fire Simulation - By Jay Ren                           *
+// * Simulates fire using particle physics!                 *
+// * You'll need to install the libraries G4P and PeasyCam. *
+// **********************************************************
 
 import g4p_controls.*;
 import peasy.*;
