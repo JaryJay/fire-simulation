@@ -40,6 +40,9 @@ void setup() {
   cam.setMinimumDistance(200);
   cam.setMaximumDistance(2000);
   cam.setYawRotationMode();
+  
+  createGUI();
+  
   wind = new PVector(0, 0);
   gravity = new PVector(0, GRAVITY);
   for (int i=0; i < NUM_PARTICLES; i++) {
