@@ -19,23 +19,35 @@ synchronized public void controlPanelDraw(PApplet appc, GWinData data) { //_CODE
 } //_CODE_:controlPanel:612462:
 
 public void remove1ParticleClick(GButton source, GEvent event) { //_CODE_:remove1Particle:223640:
-  println("remove1Particle - GButton >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    particleSystem.removeNParticles(1);
+  }
 } //_CODE_:remove1Particle:223640:
 
 public void remove10ParticlesClick(GButton source, GEvent event) { //_CODE_:remove10Particles:369045:
-  println("remove10Particles - GButton >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    particleSystem.removeNParticles(10);
+  }
 } //_CODE_:remove10Particles:369045:
 
 public void add1ParticleClick(GButton source, GEvent event) { //_CODE_:add1Particle:537328:
-  println("add1Particle - GButton >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    particleSystem.add(generateParticle());
+  }
 } //_CODE_:add1Particle:537328:
 
 public void add10ParticlesClick(GButton source, GEvent event) { //_CODE_:add10Particles:964960:
-  println("add10Particles - GButton >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    for (int i = 0; i < 10; i++) {
+      particleSystem.add(generateParticle());
+    }
+  }
 } //_CODE_:add10Particles:964960:
 
 public void gravitySliderChange(GCustomSlider source, GEvent event) { //_CODE_:gravitySlider:832510:
-  println("gravitySlider - GCustomSlider >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    gravity.y = gravitySlider.getValueF();
+  }
 } //_CODE_:gravitySlider:832510:
 
 

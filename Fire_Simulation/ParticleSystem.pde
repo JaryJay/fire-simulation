@@ -142,4 +142,18 @@ class ParticleSystem {
       add(p);
     }
   }
+  
+  void removeNParticles(int n) {
+    n = min(max(0, n), particles.size());
+    for (int i = 0; i < n; i++) {
+      int removeIndex = int(random(particles.size()));
+      Particle particle = particles.remove(removeIndex);
+      if (particle instanceof RigidBodyParticle) {
+        // Extra actions if we remove a rigid body particle
+        ((RigidBodyParticle) particle).unbondAll();
+        rigidBodyParticles.remove(particle);
+      }
+    }
+  }
+  
 }

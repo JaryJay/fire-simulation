@@ -22,11 +22,22 @@ class RigidBodyParticle extends Particle {
     }
   }
   
+  // Rigid body particles have slightly different behaviours than normal ones
+  
+  @Override void updatePosition(float dt) {
+    // Use Verlet integration to update the position
+    PVector velocity = position.copy().sub(prevPosition);
+    // Don't move as much along the XZ plane (it still moves the same amount in the Y axis)
+    velocity = new PVector(velocity.x * 0.9, velocity.y, velocity.z * 0.9);
+    prevPosition = position.copy();
+    position.add(velocity).add(force.mult(dt * dt));
+    force.set(0, 0);
+  }
+  
   @Override void updateHeat(float dt) {
     heat += heatChange + random(dt) - dt / 2;
     heatChange = 0;
     heat *= 0.999;
-    prevHeat = heat;
     heat = max(heat, 0);
   }
 
@@ -35,17 +46,7 @@ class RigidBodyParticle extends Particle {
   }
   
   
-  void render() {
-    //if (heat < HIDE_THRESHOLD) {
-    //  return;
-    //}
-    //if (heat < 10) {
-    //  fill(lerp(COLOR_1, COLOR_2, (heat - HIDE_THRESHOLD) / (10 - HIDE_THRESHOLD)));
-    //} else if (heat < 25) {
-    //  fill(lerp(COLOR_2, COLOR_3, (heat - 10) / (25 - 10)));
-    //} else if (heat < 60) {
-    //  fill(lerp(COLOR_3, COLOR_4, (heat - 25) / (60 - 25)));
-    //}
+  @Override void render() {
     fill(255,255,255);
     translate(position.x, position.y, position.z);
     box(radius());

@@ -5,6 +5,11 @@ color lerp(color c1, color c2, float factor) {
   return color((r2 - r1) * factor + r1, (g2 - g1) * factor + g1, (b2 - b1) * factor + b1);
 }
 
+Particle generateParticle() {
+  Particle p = new Particle(random(CONTAINER_WIDTH) - CONTAINER_WIDTH / 2, random(CONTAINER_HEIGHT) - CONTAINER_HEIGHT / 2, random(CONTAINER_LENGTH) - CONTAINER_LENGTH / 2, 10);
+  return p;
+}
+
 ArrayList<RigidBodyParticle> createRigidStick(int l, float x, float y, float z) {
   ArrayList<RigidBodyParticle> list = new ArrayList<RigidBodyParticle>();
   list.add(new RigidBodyParticle(x, y, z));

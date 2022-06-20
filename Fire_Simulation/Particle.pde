@@ -4,20 +4,18 @@ class Particle {
   PVector force;
   float heat;
   float heatChange = 0;
-  float prevHeat;
 
   Particle(float x, float y, float z, float heat) {
     this.position = new PVector(x, y, z);
     this.prevPosition = new PVector(x, y, z);
-    this.force = new PVector();
+    this.force = gravity.copy();
     this.heat = heat;
-    this.prevHeat = heat;
   }
 
   void updatePosition(float dt) {
     // Use Verlet integration to update the position
     PVector velocity = position.copy().sub(prevPosition);
-    velocity.mult(0.9999);
+    velocity.mult(0.999);
     prevPosition = position.copy();
     //force.mult(0.95);
     position.add(velocity).add(force.mult(dt * dt));
@@ -33,7 +31,6 @@ class Particle {
     } else {
       heat *= 0.996;
     }
-    prevHeat = heat;
     if (position.y + radius() >= CONTAINER_HEIGHT / 2 - 50) {
       heat += random(dt) * 2.4;
     }

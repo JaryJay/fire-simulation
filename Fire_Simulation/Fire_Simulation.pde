@@ -2,7 +2,7 @@ import g4p_controls.*;
 import peasy.*;
 import java.util.List;
 
-final int NUM_PARTICLES = 1000;
+final int NUM_PARTICLES = 0;
 
 final float HEAT_DIFFUSION_RADIUS = 2;
 final float HEAT_DIFFUSION_SPEED = 0.05;
@@ -29,14 +29,12 @@ ParticleSystem particleSystem = new ParticleSystem();
 PVector wind;
 PVector gravity;
 
-PeasyCam cam;
-
 void settings() {
   size(int(800), int(800), P3D);
 }
 
 void setup() {
-  cam = new PeasyCam(this, 100);
+  PeasyCam cam = new PeasyCam(this, 100);
   cam.setMinimumDistance(200);
   cam.setMaximumDistance(2000);
   cam.setYawRotationMode();
@@ -46,12 +44,12 @@ void setup() {
   wind = new PVector(0, 0);
   gravity = new PVector(0, GRAVITY);
   for (int i=0; i < NUM_PARTICLES; i++) {
-    particleSystem.add(new Particle(random(CONTAINER_WIDTH), random(CONTAINER_HEIGHT), random(CONTAINER_LENGTH), random(20)));
+    particleSystem.add(generateParticle());
   }
   for (int i = 0; i < 20; i++) {
     particleSystem.update();
   }
-  for (int i = 0; i < 5; i ++) {
+  for (int i = 0; i < 0; i ++) {
     List<RigidBodyParticle> cube = createRigidCube(4, random(CONTAINER_WIDTH), random(CONTAINER_HEIGHT), random(CONTAINER_LENGTH));
     particleSystem.addAll(cube);
   }
@@ -60,10 +58,12 @@ void setup() {
 void draw() {
   background(200, 200, 200);
   noStroke();
-  //lights();
   //wind = new PVector(mouseX - width/2, mouseY - height/2).mult(0.0005);
-  particleSystem.update();
-  particleSystem.render();
+  synchronized (particleSystem) {
+    particleSystem.update();
+    particleSystem.render();
+    numParticlesLabel.setText("Number of Particles:         " + particleSystem.particles.size());
+  }
 }
 
 void keyPressed() {
