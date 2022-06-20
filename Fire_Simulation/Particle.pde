@@ -28,15 +28,16 @@ class Particle {
   void updateHeat(float dt) {
     heat += heatChange + random(dt) - dt / 2;
     heatChange = 0;
-    if (position.y < 0) {
+    if (position.y < -CONTAINER_HEIGHT / 2) {
       heat *= 0.95;
     } else {
       heat *= 0.996;
     }
     prevHeat = heat;
-    if (position.y + radius() >= CONTAINER_HEIGHT - 50) {
+    if (position.y + radius() >= CONTAINER_HEIGHT / 2 - 50) {
       heat += random(dt) * 2.4;
     }
+    heat = max(heat, 0);
   }
 
   void render() {

@@ -22,13 +22,13 @@ class RigidBodyParticle extends Particle {
     }
   }
   
-  //@Override void updateHeat(float dt) {
-  //  heat += heatChange;// + random(dt /2) - dt / 4;
-  //  heatChange = 0;
-  //  heat *= 0.992;
-  //  heat = min(max(heat, 0), 500);
-  //  prevHeat = heat;
-  //}
+  @Override void updateHeat(float dt) {
+    heat += heatChange + random(dt) - dt / 2;
+    heatChange = 0;
+    heat *= 0.999;
+    prevHeat = heat;
+    heat = max(heat, 0);
+  }
 
   @Override float radius() {
     return RIGID_PARTICLE_SIZE / 2;
