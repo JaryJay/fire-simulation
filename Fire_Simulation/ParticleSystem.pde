@@ -42,9 +42,8 @@ class ParticleSystem {
 
   void applyForces() {
     for (Particle p : particles) {
-      p.force.add(wind);
       p.force.add(gravity);
-      if (!(p instanceof RigidBodyParticle)) {
+      if (gravity.y != 0 && !(p instanceof RigidBodyParticle)) {
         p.force.add(0, p.heat * -UPWARD_FORCE, 0);
       }
     }
@@ -114,7 +113,7 @@ class ParticleSystem {
   void convertHotRigidBodies() {
     for (int i = rigidBodyParticles.size() - 1; i >= 0; i--) {
       RigidBodyParticle p = rigidBodyParticles.get(i);
-      if (p.heat >= BURN_HEAT) {
+      if (p.heat >= burnHeat) {
         rigidBodyParticles.remove(i);
         particles.remove(p);
         p.unbondAll();

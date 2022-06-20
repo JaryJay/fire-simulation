@@ -58,7 +58,7 @@ public void sourceHeatSliderChange(GCustomSlider source, GEvent event) { //_CODE
 
 public void addCubeClick(GButton source, GEvent event) { //_CODE_:addCube:868378:
   synchronized (particleSystem) {
-    List<RigidBodyParticle> cube = createRigidCube(4, random(CONTAINER_WIDTH) - CONTAINER_WIDTH / 2, random(CONTAINER_HEIGHT) - CONTAINER_HEIGHT / 2, random(CONTAINER_LENGTH) - CONTAINER_LENGTH / 2);
+    List<RigidBodyParticle> cube = createRigidCube(cubeSize, random(CONTAINER_WIDTH) - CONTAINER_WIDTH / 2, random(CONTAINER_HEIGHT) - CONTAINER_HEIGHT / 2, random(CONTAINER_LENGTH) - CONTAINER_LENGTH / 2);
     particleSystem.addAll(cube);
   }
 } //_CODE_:addCube:868378:
@@ -74,6 +74,18 @@ public void clearAllButtonClick(GButton source, GEvent event) { //_CODE_:clearAl
   }
 } //_CODE_:clearAllButton:360000:
 
+public void burnHeatSliderChange(GCustomSlider source, GEvent event) { //_CODE_:burnHeatSlider:329870:
+  burnHeat = burnHeatSlider.getValueF();
+} //_CODE_:burnHeatSlider:329870:
+
+public void cubeSizeSliderChange(GCustomSlider source, GEvent event) { //_CODE_:cubeSizeSlider:269362:
+  cubeSize = cubeSizeSlider.getValueI();
+} //_CODE_:cubeSizeSlider:269362:
+
+public void iWonderWhatThisDoesClick(GButton source, GEvent event) { //_CODE_:iWonderWhatThisDoes:439330:
+  link("https://github.com/JaryJay/fire-simulation");
+} //_CODE_:iWonderWhatThisDoes:439330:
+
 
 
 // Create all the GUI controls. 
@@ -83,7 +95,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  controlPanel = GWindow.getWindow(this, "Control Panel", 0, 0, 350, 250, JAVA2D);
+  controlPanel = GWindow.getWindow(this, "Control Panel", 0, 0, 350, 300, JAVA2D);
   controlPanel.noLoop();
   controlPanel.setActionOnClose(G4P.KEEP_OPEN);
   controlPanel.addDrawHandler(this, "controlPanelDraw");
@@ -140,18 +152,53 @@ public void createGUI(){
   clearAllButton.setText("Clear All");
   clearAllButton.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   clearAllButton.addEventHandler(this, "clearAllButtonClick");
-  gravityLabel = new GLabel(controlPanel, 278, 220, 45, 20);
+  gravityLabel = new GLabel(controlPanel, 277, 225, 45, 20);
   gravityLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   gravityLabel.setText("Gravity");
   gravityLabel.setOpaque(false);
-  sourceHeatLabel = new GLabel(controlPanel, 239, 220, 45, 20);
+  sourceHeatLabel = new GLabel(controlPanel, 239, 220, 45, 30);
   sourceHeatLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   sourceHeatLabel.setText("Source Heat");
   sourceHeatLabel.setOpaque(false);
-  particleSizeLabel = new GLabel(controlPanel, 195, 220, 45, 20);
+  particleSizeLabel = new GLabel(controlPanel, 195, 220, 45, 30);
   particleSizeLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   particleSizeLabel.setText("Particle Size");
   particleSizeLabel.setOpaque(false);
+  burnHeatSlider = new GCustomSlider(controlPanel, 200, 120, 100, 40, "blue18px");
+  burnHeatSlider.setRotation(PI/2, GControlMode.CORNER);
+  burnHeatSlider.setLimits(20.0, 5.0, 60.0);
+  burnHeatSlider.setNbrTicks(11);
+  burnHeatSlider.setShowTicks(true);
+  burnHeatSlider.setNumberFormat(G4P.DECIMAL, 2);
+  burnHeatSlider.setOpaque(false);
+  burnHeatSlider.addEventHandler(this, "burnHeatSliderChange");
+  burnHeatLabel = new GLabel(controlPanel, 157, 218, 45, 30);
+  burnHeatLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  burnHeatLabel.setText("Burn Heat");
+  burnHeatLabel.setOpaque(false);
+  cautionLabel = new GLabel(controlPanel, 9, 144, 135, 30);
+  cautionLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  cautionLabel.setText("Caution: Flammable!");
+  cautionLabel.setOpaque(false);
+  cubeSizeSlider = new GCustomSlider(controlPanel, 46, 169, 100, 40, "blue18px");
+  cubeSizeSlider.setLimits(4, 2, 8);
+  cubeSizeSlider.setNbrTicks(7);
+  cubeSizeSlider.setStickToTicks(true);
+  cubeSizeSlider.setShowTicks(true);
+  cubeSizeSlider.setNumberFormat(G4P.INTEGER, 0);
+  cubeSizeSlider.setOpaque(false);
+  cubeSizeSlider.addEventHandler(this, "cubeSizeSliderChange");
+  cubeSizeLabel = new GLabel(controlPanel, 8, 174, 45, 30);
+  cubeSizeLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  cubeSizeLabel.setText("Cube Size");
+  cubeSizeLabel.setOpaque(false);
+  creditsLabel = new GLabel(controlPanel, 270, 280, 80, 20);
+  creditsLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  creditsLabel.setText("Made by Jay");
+  creditsLabel.setOpaque(true);
+  iWonderWhatThisDoes = new GButton(controlPanel, 0, 270, 80, 30);
+  iWonderWhatThisDoes.setText("????");
+  iWonderWhatThisDoes.addEventHandler(this, "iWonderWhatThisDoesClick");
   controlPanel.loop();
 }
 
@@ -171,3 +218,10 @@ GButton clearAllButton;
 GLabel gravityLabel; 
 GLabel sourceHeatLabel; 
 GLabel particleSizeLabel; 
+GCustomSlider burnHeatSlider; 
+GLabel burnHeatLabel; 
+GLabel cautionLabel; 
+GCustomSlider cubeSizeSlider; 
+GLabel cubeSizeLabel; 
+GLabel creditsLabel; 
+GButton iWonderWhatThisDoes; 

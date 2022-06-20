@@ -47,7 +47,7 @@ class RigidBodyParticle extends Particle {
   
   
   @Override void render() {
-    fill(255,255,255);
+    fill(lerp(color(255), color(0), heat / burnHeat));
     translate(position.x, position.y, position.z);
     box(radius());
     translate(-position.x, -position.y, -position.z);
