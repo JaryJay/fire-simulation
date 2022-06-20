@@ -1,3 +1,4 @@
+// Represents a particle that is part of a rigid body (in this case, a cube)
 class RigidBodyParticle extends Particle {
 
   ArrayList<RigidBodyParticle> bonds = new ArrayList<RigidBodyParticle>();

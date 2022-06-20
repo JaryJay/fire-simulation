@@ -18,6 +18,7 @@ class ParticleSystem {
     convertHotRigidBodies();
   }
 
+  // Spreads heat between adjacent particles
   void applyHeatDiffusion() {
     for (int i=0; i < particles.size(); i++) {
       for (int j = i + 1; j < particles.size(); j++) {
@@ -40,6 +41,7 @@ class ParticleSystem {
     }
   }
 
+  // Applies gravity and upward force to particles
   void applyForces() {
     for (Particle p : particles) {
       p.force.add(gravity);
@@ -59,6 +61,7 @@ class ParticleSystem {
     }
   }
 
+  // Make sure the particles are in the container
   void applyConstraints() {
     for (Particle p : particles) {
       p.position.x = min(max(p.position.x, -CONTAINER_WIDTH / 2 + p.radius()), CONTAINER_WIDTH / 2 - p.radius());
@@ -73,6 +76,7 @@ class ParticleSystem {
     }
   }
 
+  // Keeps the rigid bodies together
   void applyRigidBodyConstraints() {
     for (RigidBodyParticle p0 : rigidBodyParticles) {
       for (RigidBodyParticle p1 : p0.bonds) {
@@ -110,6 +114,7 @@ class ParticleSystem {
     }
   }
   
+  // Rigid body particles with heat >= burnHeat will be transformed into normal fire particles
   void convertHotRigidBodies() {
     for (int i = rigidBodyParticles.size() - 1; i >= 0; i--) {
       RigidBodyParticle p = rigidBodyParticles.get(i);
@@ -142,6 +147,7 @@ class ParticleSystem {
     }
   }
   
+  // Randomly removes n particles
   void removeNParticles(int n) {
     n = min(max(0, n), particles.size());
     for (int i = 0; i < n; i++) {
