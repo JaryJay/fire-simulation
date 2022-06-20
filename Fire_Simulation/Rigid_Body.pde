@@ -42,7 +42,7 @@ class RigidBodyParticle extends Particle {
   }
 
   @Override float radius() {
-    return RIGID_PARTICLE_SIZE / 2;
+    return particleSize;
   }
   
   

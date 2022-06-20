@@ -28,7 +28,7 @@ List<RigidBodyParticle> createRigidCube(int size, float x, float y, float z) {
     for (int c = 0; c < size; c++) {
       cube.get(r).add(new ArrayList<RigidBodyParticle>());
       for (int d = 0; d < size; d++) {
-        RigidBodyParticle p = new RigidBodyParticle(x + r * RIGID_PARTICLE_SIZE, y + c * RIGID_PARTICLE_SIZE, z + d * RIGID_PARTICLE_SIZE);
+        RigidBodyParticle p = new RigidBodyParticle(x + r * particleSize * 2, y + c * particleSize * 2, z + d * particleSize * 2);
         if (r != 0) {
           p.bondWith(cube.get(r - 1).get(c).get(d));
         }

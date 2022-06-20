@@ -1,3 +1,4 @@
+// Represents a fiery particle.
 class Particle {
   PVector position;
   PVector prevPosition;
@@ -27,10 +28,12 @@ class Particle {
     heat += heatChange + random(dt) - dt / 2;
     heatChange = 0;
     if (position.y < -CONTAINER_HEIGHT / 2) {
+      // Heat dissipates faster when it's high up in the air
       heat *= 0.95;
     } else {
       heat *= 0.996;
     }
+    // Increase heat if close to the bottom of the container
     if (position.y + radius() >= CONTAINER_HEIGHT / 2 - 50) {
       heat += random(dt) * sourceHeat;
     }
@@ -41,6 +44,7 @@ class Particle {
     if (heat < HIDE_THRESHOLD) {
       return;
     }
+    // The heat is used to interpolate between different colors, making a cool gradient effect
     if (heat < 10) {
       fill(lerp(COLOR_1, COLOR_2, (heat) / (10)));
     } else if (heat < 25) {
@@ -55,6 +59,7 @@ class Particle {
     translate(-position.x, -position.y, -position.z);
   }
 
+  // The radius is a function of the heat and the particle size
   float radius() {
     return 1.8 * sqrt(heat) + particleSize;
   }
