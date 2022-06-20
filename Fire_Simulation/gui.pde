@@ -18,31 +18,33 @@ synchronized public void controlPanelDraw(PApplet appc, GWinData data) { //_CODE
   appc.background(230);
 } //_CODE_:controlPanel:612462:
 
-public void remove1ParticleClick(GButton source, GEvent event) { //_CODE_:remove1Particle:223640:
-  synchronized (particleSystem) {
-    particleSystem.removeNParticles(1);
-  }
-} //_CODE_:remove1Particle:223640:
-
-public void remove10ParticlesClick(GButton source, GEvent event) { //_CODE_:remove10Particles:369045:
+public void remove10ParticleClick(GButton source, GEvent event) { //_CODE_:remove10Particle:223640:
   synchronized (particleSystem) {
     particleSystem.removeNParticles(10);
   }
-} //_CODE_:remove10Particles:369045:
+} //_CODE_:remove10Particle:223640:
 
-public void add1ParticleClick(GButton source, GEvent event) { //_CODE_:add1Particle:537328:
+public void remove100ParticlesClick(GButton source, GEvent event) { //_CODE_:remove100Particles:369045:
   synchronized (particleSystem) {
-    particleSystem.add(generateParticle());
+    particleSystem.removeNParticles(100);
   }
-} //_CODE_:add1Particle:537328:
+} //_CODE_:remove100Particles:369045:
 
-public void add10ParticlesClick(GButton source, GEvent event) { //_CODE_:add10Particles:964960:
+public void add10ParticleClick(GButton source, GEvent event) { //_CODE_:add10Particle:537328:
   synchronized (particleSystem) {
     for (int i = 0; i < 10; i++) {
       particleSystem.add(generateParticle());
     }
   }
-} //_CODE_:add10Particles:964960:
+} //_CODE_:add10Particle:537328:
+
+public void add100ParticlesClick(GButton source, GEvent event) { //_CODE_:add100Particles:964960:
+  synchronized (particleSystem) {
+    for (int i = 0; i < 100; i++) {
+      particleSystem.add(generateParticle());
+    }
+  }
+} //_CODE_:add100Particles:964960:
 
 public void gravitySliderChange(GCustomSlider source, GEvent event) { //_CODE_:gravitySlider:832510:
   synchronized (particleSystem) {
@@ -51,16 +53,26 @@ public void gravitySliderChange(GCustomSlider source, GEvent event) { //_CODE_:g
 } //_CODE_:gravitySlider:832510:
 
 public void sourceHeatSliderChange(GCustomSlider source, GEvent event) { //_CODE_:sourceHeatSlider:752988:
-  println("custom_slider1 - GCustomSlider >> GEvent." + event + " @ " + millis());
+  sourceHeat = sourceHeatSlider.getValueF();
 } //_CODE_:sourceHeatSlider:752988:
 
 public void addCubeClick(GButton source, GEvent event) { //_CODE_:addCube:868378:
-  println("addCube - GButton >> GEvent." + event + " @ " + millis());
+  synchronized (particleSystem) {
+    List<RigidBodyParticle> cube = createRigidCube(4, random(CONTAINER_WIDTH) - CONTAINER_WIDTH / 2, random(CONTAINER_HEIGHT) - CONTAINER_HEIGHT / 2, random(CONTAINER_LENGTH) - CONTAINER_LENGTH / 2);
+    particleSystem.addAll(cube);
+  }
 } //_CODE_:addCube:868378:
 
 public void particleSizeSliderChange(GCustomSlider source, GEvent event) { //_CODE_:particleSizeSlider:859119:
   particleSize = particleSizeSlider.getValueF();
 } //_CODE_:particleSizeSlider:859119:
+
+public void clearAllButtonClick(GButton source, GEvent event) { //_CODE_:clearAllButton:360000:
+  synchronized (particleSystem) {
+    particleSystem.particles = new ArrayList<Particle>();
+    particleSystem.rigidBodyParticles = new ArrayList<RigidBodyParticle>();
+  }
+} //_CODE_:clearAllButton:360000:
 
 
 
@@ -75,26 +87,26 @@ public void createGUI(){
   controlPanel.noLoop();
   controlPanel.setActionOnClose(G4P.KEEP_OPEN);
   controlPanel.addDrawHandler(this, "controlPanelDraw");
-  remove1Particle = new GButton(controlPanel, 50, 30, 80, 30);
-  remove1Particle.setText("Remove 1");
-  remove1Particle.setLocalColorScheme(GCScheme.RED_SCHEME);
-  remove1Particle.addEventHandler(this, "remove1ParticleClick");
-  remove10Particles = new GButton(controlPanel, 50, 60, 80, 30);
-  remove10Particles.setText("Remove 10");
-  remove10Particles.setLocalColorScheme(GCScheme.RED_SCHEME);
-  remove10Particles.addEventHandler(this, "remove10ParticlesClick");
+  remove10Particle = new GButton(controlPanel, 50, 30, 80, 30);
+  remove10Particle.setText("Remove 10");
+  remove10Particle.setLocalColorScheme(GCScheme.RED_SCHEME);
+  remove10Particle.addEventHandler(this, "remove10ParticleClick");
+  remove100Particles = new GButton(controlPanel, 50, 60, 80, 30);
+  remove100Particles.setText("Remove 100");
+  remove100Particles.setLocalColorScheme(GCScheme.RED_SCHEME);
+  remove100Particles.addEventHandler(this, "remove100ParticlesClick");
   numParticlesLabel = new GLabel(controlPanel, 130, 30, 80, 60);
   numParticlesLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   numParticlesLabel.setText("Number of Particles:         0");
   numParticlesLabel.setOpaque(false);
-  add1Particle = new GButton(controlPanel, 210, 30, 80, 30);
-  add1Particle.setText("Add 1");
-  add1Particle.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  add1Particle.addEventHandler(this, "add1ParticleClick");
-  add10Particles = new GButton(controlPanel, 210, 60, 80, 30);
-  add10Particles.setText("Add 10");
-  add10Particles.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  add10Particles.addEventHandler(this, "add10ParticlesClick");
+  add10Particle = new GButton(controlPanel, 210, 30, 80, 30);
+  add10Particle.setText("Add 10");
+  add10Particle.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  add10Particle.addEventHandler(this, "add10ParticleClick");
+  add100Particles = new GButton(controlPanel, 210, 60, 80, 30);
+  add100Particles.setText("Add 100");
+  add100Particles.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  add100Particles.addEventHandler(this, "add100ParticlesClick");
   gravitySlider = new GCustomSlider(controlPanel, 320, 120, 100, 40, "blue18px");
   gravitySlider.setRotation(PI/2, GControlMode.CORNER);
   gravitySlider.setLimits(0.7, 0.0, 2.0);
@@ -124,18 +136,38 @@ public void createGUI(){
   particleSizeSlider.setNumberFormat(G4P.DECIMAL, 2);
   particleSizeSlider.setOpaque(false);
   particleSizeSlider.addEventHandler(this, "particleSizeSliderChange");
+  clearAllButton = new GButton(controlPanel, 130, 90, 80, 20);
+  clearAllButton.setText("Clear All");
+  clearAllButton.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
+  clearAllButton.addEventHandler(this, "clearAllButtonClick");
+  gravityLabel = new GLabel(controlPanel, 278, 220, 45, 20);
+  gravityLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  gravityLabel.setText("Gravity");
+  gravityLabel.setOpaque(false);
+  sourceHeatLabel = new GLabel(controlPanel, 239, 220, 45, 20);
+  sourceHeatLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  sourceHeatLabel.setText("Source Heat");
+  sourceHeatLabel.setOpaque(false);
+  particleSizeLabel = new GLabel(controlPanel, 195, 220, 45, 20);
+  particleSizeLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  particleSizeLabel.setText("Particle Size");
+  particleSizeLabel.setOpaque(false);
   controlPanel.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
 GWindow controlPanel;
-GButton remove1Particle; 
-GButton remove10Particles; 
+GButton remove10Particle; 
+GButton remove100Particles; 
 GLabel numParticlesLabel; 
-GButton add1Particle; 
-GButton add10Particles; 
+GButton add10Particle; 
+GButton add100Particles; 
 GCustomSlider gravitySlider; 
 GCustomSlider sourceHeatSlider; 
 GButton addCube; 
 GCustomSlider particleSizeSlider; 
+GButton clearAllButton; 
+GLabel gravityLabel; 
+GLabel sourceHeatLabel; 
+GLabel particleSizeLabel; 

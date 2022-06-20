@@ -32,7 +32,7 @@ class Particle {
       heat *= 0.996;
     }
     if (position.y + radius() >= CONTAINER_HEIGHT / 2 - 50) {
-      heat += random(dt) * 2.4;
+      heat += random(dt) * sourceHeat;
     }
     heat = max(heat, 0);
   }

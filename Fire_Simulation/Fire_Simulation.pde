@@ -14,7 +14,6 @@ final float UPWARD_FORCE = 0.038;
 
 final float HIDE_THRESHOLD = 3;
 
-float particleSize = 7;
 final float RIGID_PARTICLE_SIZE = 20;
 
 final float BURN_HEAT = 20;
@@ -23,6 +22,10 @@ final color COLOR_1 = color(1, 1, 0);
 final color COLOR_2 = color(204, 93, 2);
 final color COLOR_3 = color(50, 40, 100);
 final color COLOR_4 = color(255, 255, 255);
+
+
+float particleSize = 7;
+float sourceHeat = 2.4;
 
 ParticleSystem particleSystem = new ParticleSystem();
 PVector wind;
